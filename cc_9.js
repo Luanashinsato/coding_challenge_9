@@ -35,7 +35,7 @@ class Manager extends Employee {
     }
     // Adding a method that returns 10% of the manager’s annual salary
     calculateBonus() {
-        return this.calculateAnnualSalary() * 0.1; 
+        return super.calculateAnnualSalary() * 0.1; 
     }
     // Task 4: Modifying to consider bonuses for managers
     calculateAnnualSalary() {
@@ -69,6 +69,12 @@ class Company {
     calculateTotalPayroll() {
         return this.employees.reduce((total, employee) => total + employee.calculateAnnualSalary(), 0); 
     }
+    // Task 5: Adding a method to convert an Employee into a Manager while retaining their original details
+    promoteToManager(employee, teamSize) {
+        const index = this.employees.indexOf(employee); 
+        if (index !== -1) 
+        this.employees[index] = new Manager(employee.name, employee.id, employee.department, employee.salary, teamSize);
+    }
 }
 // Test Cases 
 const company = new Company("TechCorp");
@@ -81,6 +87,14 @@ company.listEmployees();
 
 
 // Task 4: Implementing a Payroll System
-// Changes made in manager and company class
+// Changes made in Manager and Company class
 // Test case
 console.log(company.calculateTotalPayroll()); // Expected output: 165600 (assuming emp1 and mgr1 salaries)
+
+
+// Task 5: Implementing Promotions
+// Changes made in Company class
+// Test case
+company.promoteToManager(emp1, 3);
+company.listEmployees(); // Expected output: "Manager: Alice Johnson, ID: 101, Department: Sales, Salary: $5000, Team Size: 3"
+
